@@ -1,103 +1,58 @@
-#Table Content:
+# Players Selection:
 
-               # Indian ODI Team
+# Draw Bar Graph for this:
 
-               # Batsman, Wicket keeper, All Rounder, Bowler (No of Matches)
+# 1) Sort the Ind Player Batting in descending order based on Average >= 50, SR >= 100 and Number of Match atleast >= 5
 
-               
-
-               # Players scored runs in 2017
-
-               # Players wicket taken in 2017
-
-               # Players scored runs against Opp Team
-
-               # Players wicket taken against Opp Team
-
-               # Injured Player list
-
-               # New Players
+      top_batsman_2017 <- ind_plyr_bat %>% filter(Inns >= 5, SR >= 100, Ave >= 50) %>% arrange(desc(Ave))
 
  
 
- 
+       ggplot(data=ind_plyr_bat) + geom_bar(mapping = aes(x=Player, y=Ave, fill = ((Ave >= 50) & (SR >= 100) & (Inns >= 5))), stat = "identity")
 
-# Tables:
+       + scale_fill_manual("Batting Avg in 2017 Year", values = c("orange", "lightblue"), labels = c("Bad Avg, SR/ Matches < 5", "Good Avg, SR"))
 
-               # Ind Player Batting Info: Player, Match, NO (Not Out), Runs, HS, Ave, SR, 100, 50, 0
-
-               # Ind Player Bowling Info: Player, Match, Overs, Mdns, Runs, Wkts, BBI, Ave, Econ, SR
-
-               # Injured Player Info: Player, Match, NO (Not Out), Bat.Runs, Bat.HS, Bat.Ave, Bat.SR, Bowl.Overs,Bowl.Runs, Bowl.Wkts, Bowl.Ave, Bowl.Econ
+       + coord_flip() + geom_hline(aes(yintercept = 50, linetype = "50 Average"), colour = "red")
 
  
 
-               # Player batting against Opp Team in Last series: Player, Match, NO (Not Out), Runs, HS, Ave, BF, SR, 100, 50, 0
+# 2) Sort the Ind Player Bowling in Ascending order based on Average < 30 and Economy < 6 and Number of Match atleast >= 5
 
-               # Player Bowling against Opp Team in Last series: Player, Match, Overs, Mdns, Runs, Wkts, BBI, Ave, Econ, SR
-
- 
-
-               # New Players Info:
-
-                               # Player Batting in First-class Matches: Player, Match, NO (Not Out), Runs, HS, Ave, BF, SR, 100, 50, 0
-
-                               # Player Bowling in First-class Matches: Player, Match, Overs, Mdns, Runs, Wkts, BBI, Ave, Econ, SR
-
- 
-               # Draw Bar Graph for this:
-
-               # 1) Sort the Ind Player Batting in descending order based on Average >= 50, SR >= 100 and Number of Match atleast >= 5
-
-                                Best_batsman <- ind_plyr_bat %>% filter(Inns >= 5, SR >= 100, Ave >= 50) %>% arrange(desc(Ave))
+       top_bowlers_2017 <- ind_plyr_bowl %>% filter(Inns >= 5, Ave < 30, ECON < 6) %>% arrange(Ave)
 
  
 
-                                ggplot(data=ind_plyr_bat) + geom_bar(mapping = aes(x=Player, y=Ave, fill = ((Ave >= 50) & (SR >= 100) & (Inns >= 5))), stat = "identity")
+      ggplot(data=ind_plyr_bowl)+geom_bar(mapping = aes(x=Player, y=Ave, fill = ((Ave < 30) & (Inns >= 5) & (ECON < 6))), stat = "identity")
 
-                                  + scale_fill_manual("Batting Avg in 2017 Year", values = c("orange", "lightblue"), labels = c("Bad Avg, SR/ Matches < 5", "Good Avg, SR"))
+       + scale_fill_manual("Bowl Avg & Econ in 2017 Year", values = c("orange", "lightblue"), labels = c("Bad Avg, Econ/ Matches < 5", "Good Avg, Econ"))
 
-                                  + coord_flip() + geom_hline(aes(yintercept = 50, linetype = "50 Average"), colour = "red")
-
- 
-
-                # 2) Sort the Ind Player Bowling in Ascending order based on Average < 30 and Economy < 6 and Number of Match atleast >= 5
-
-                                Best_bowlers <- ind_plyr_bowl %>% filter(Inns >= 5, Ave < 30, ECON < 6) %>% arrange(Ave)
+       + coord_flip() + geom_hline(aes(yintercept = 30, linetype = "30 Average"), colour = "blue")
 
  
 
-                                ggplot(data=ind_plyr_bowl)+geom_bar(mapping = aes(x=Player, y=Ave, fill = ((Ave < 30) & (Inns >= 5) & (ECON < 6))), stat = "identity")
+# 3) Sort the Player Batting against Opp Team in descending order based on Average >= 50, SR >= 100 and Minimum 2 Innings played
 
-                                  + scale_fill_manual("Bowl Avg & Econ in 2017 Year", values = c("orange", "lightblue"), labels = c("Bad Avg, Econ/ Matches < 5", "Good Avg, Econ"))
-
-                                  + coord_flip() + geom_hline(aes(yintercept = 30, linetype = "30 Average"), colour = "blue")
-
- 
-
-                # 3) Sort the Player Batting against Opp Team in descending order based on Average >= 50, SR >= 100 and Minimum 2 Innings played
-
-                                Top_batsman <- plyr_bat_against_Opp %>% filter(Inns >= 2, Ave >= 50) %>% arrange(desc(Ave))
+         top_batsman_opp <- plyr_bat_against_Opp %>% filter(Inns >= 2, Ave >= 50) %>% arrange(desc(Ave))
 
                                
 
-                                ggplot(data= plyr_bat_against_Opp) + geom_bar(mapping = aes(x=Player, y=Ave, fill = (Ave >= 50) & (SR >= 100) & (Inns >= 2)), stat = "identity")
+         ggplot(data= plyr_bat_against_Opp) + geom_bar(mapping = aes(x=Player, y=Ave, fill = (Ave >= 50) & (SR >= 100) & (Inns >= 2)), stat = "identity")
 
-                                  + scale_fill_manual("Batting Avg against Opp Team", values = c("orange", "lightblue"), labels = c("Bad Avg, SR/ Matches < 2","Good Avg, SR"))
+         + scale_fill_manual("Batting Avg against Opp Team", values = c("orange", "lightblue"), labels = c("Bad Avg, SR/ Matches < 2","Good Avg, SR"))
 
-                                  + coord_flip() + geom_hline(aes(yintercept = 50, linetype = "50 Average"), colour = "red")
-
- 
-
-               # 4) Sort the Ind Player Bowling in Ascending order based on Average < 30 and Economy < 6 and Number of Match atleast >= 2
-
-                                Top_bowlers <- plyr_bowl_against_Opp %>% filter(Inns >= 2, Ave < 30, ECON < 6) %>% arrange(Ave)
+         + coord_flip() + geom_hline(aes(yintercept = 50, linetype = "50 Average"), colour = "red")
 
  
 
-                                ggplot(data=plyr_bowl_against_Opp)+geom_bar(mapping = aes(x=Player, y=Ave, fill = ((Ave<30) & (ECON < 6) & (Inns >=2))), stat = "identity")
+# 4) Sort the Ind Player Bowling in Ascending order based on Average < 30 and Economy < 6 and Number of Match atleast >= 2
 
-                                 + scale_fill_manual("Bowl Avg,Econ against Opp Team", values = c("orange", "lightblue"), labels = c("Bad Avg, Econ/ Matches < 2", "Good Avg, Econ"))
+           Top_bowlers <- plyr_bowl_against_Opp %>% filter(Inns >= 2, Ave < 30, ECON < 6) %>% arrange(Ave)
 
-                                 + coord_flip() + geom_hline(aes(yintercept = 30, linetype = "30 Average"), colour = "blue")
+ 
+
+            ggplot(data=plyr_bowl_against_Opp)+geom_bar(mapping = aes(x=Player, y=Ave, fill = ((Ave<30) & (ECON < 6) & (Inns >=2))), stat = "identity")
+
+            + scale_fill_manual("Bowl Avg,Econ against Opp Team", values = c("orange", "lightblue"), labels = c("Bad Avg, Econ/ Matches < 2", "Good Avg, Econ"))
+
+            + coord_flip() + geom_hline(aes(yintercept = 30, linetype = "30 Average"), colour = "blue")
 
