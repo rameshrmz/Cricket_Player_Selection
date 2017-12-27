@@ -2,7 +2,7 @@
 
 * Tables:
 
-               * Indian ODI Team Squad 2017: (Batsman, Wicket keeper, All Rounders, Bowlers)
+            Indian ODI Team Squad 2017: (Batsman, Wicket keeper, All Rounders, Bowlers)
 
                     * Players scored runs in 2017             (plyr_bat_2017.xlsx)
                     * Players wickets taken in 2017           (plyr_bowl_2017.xlsx)
